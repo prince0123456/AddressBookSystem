@@ -9,30 +9,44 @@ namespace AddressBookOOPs
 {
     public class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Address Book Program");
-            Console.WriteLine("\nPlease choose one of the options:");
-            Console.WriteLine("1)Add Contact");
-            Console.WriteLine("4)Exit");
-            //Console.WriteLine("\nEnter the option:");
-            //int key = Convert.ToInt32(Console.ReadLine());
-            while (true)
+            Console.WriteLine("Welcome to Address Book");
+            Console.WriteLine("Enter the use case to execute\n1:Ability to create a contact\n2:Add a new contact to Address book\n3:Ability to Edit existing condtact\n4:Ability to Delete contact using person's name\n");
+            int option = Convert.ToInt32(Console.ReadLine());
+            switch (option)
             {
-                Console.WriteLine("\nEnter the option:");
-                int key = Convert.ToInt32(Console.ReadLine());
-                Read read = new Read();
-                //Contact contact = new Contact();
-                if (key==1)
-                {
-                    read.readData();
-                }
-                else if(key==4)
-                {
-                    Console.WriteLine("\nThank You");
+                case 1:
+                    Console.WriteLine("Able to create a contact list ");
+                    //created a Contacts class
                     break;
-                }
+                case 2:
+                    Console.WriteLine("Enter first name = ");
+                    string firstName = Console.ReadLine();
+                    Console.WriteLine("Enter last name = ");
+                    string lastName = Console.ReadLine();
+                    Console.WriteLine("Enter address= ");
+                    String address = Console.ReadLine();
+                    Console.WriteLine("Enter city= ");
+                    String city = Console.ReadLine();
+                    Console.WriteLine("Enter state= ");
+                    String state = Console.ReadLine();
+                    Console.WriteLine("Enter zip= ");
+                    String zip = Console.ReadLine();
+                    Console.WriteLine("Enter phoneNumber= ");
+                    String phoneNumber = Console.ReadLine();
+                    Console.WriteLine("Enter email= ");
+                    String email = Console.ReadLine();
+                    AddressBook builder = new AddressBook();
+                    builder.AddContacts(firstName, lastName, address, city, state, zip, phoneNumber, email);
+                    Console.WriteLine("\n************** Contact Details are ************");
+                    builder.DisplayContact();
+                    break;
+                default:
+                    break;
+
+
+
             }
         }
-    }
 }
