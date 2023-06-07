@@ -7,72 +7,54 @@ using System.Threading.Tasks;
 
 namespace AddressBookOOPs
 {
-    class AddressBook
+    public class AddressBook : IContacts
     {
-        public List<Contact> ContactsList;
-        Dictionary<string, List<Contact>> addressBookDictionary = new Dictionary<string, List<Contact>>();
+        public List<Contact> contactList;
+
         public AddressBook()
         {
-            this.ContactsList = new List<Contact>();
+            this.contactList = new List<Contact>();
         }
-        public void AddContacts(String firstName, String lastName, String address, String city, String state, String zip, String phone, String email)
+
+        public void AddContact(String firstName, String lastName, String address, String city, String state, String zip, String phoneNumber, String email)
         {
-            Contact contact = new Contact(firstName, lastName, address, city, state, zip, phone, email);
-            this.ContactsList.Add(contact);
-        }
-        public void AddContacts()
-        {
-            Console.WriteLine("How many persons contacts you want to add to address book");
-            int num = int.Parse(Console.ReadLine());
-            for (int i = 1; i <= num; i++)
+            bool duplicate = Equals(firstName);
+            if (!duplicate)
             {
-                Console.WriteLine("Enter first name = ");
-                string firstName = Console.ReadLine();
-                Console.WriteLine("Enter last name = ");
-                string lastName = Console.ReadLine();
-                Console.WriteLine("Enter address= ");
-                string address = Console.ReadLine();
-                Console.WriteLine("Enter city= ");
-                string city = Console.ReadLine();
-                Console.WriteLine("Enter state= ");
-                string state = Console.ReadLine();
-                Console.WriteLine("Enter zip= ");
-                string zip = Console.ReadLine();
-                Console.WriteLine("Enter phoneNumber= ");
-                string phoneNumber = Console.ReadLine();
-                Console.WriteLine("Enter email= ");
-                string email = Console.ReadLine();
                 Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
-                ContactsList.Add(contact);
-                Console.WriteLine("contact added succesfully");
+                contactList.Add(contact);
+            }
+            else
+            {
+                Console.WriteLine("Cannot add duplicate contacts first name");
             }
         }
-        public void DisplayContact()
+
+        /// <summary>
+        /// Overriding the Equals method to find the duplicate contacts
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <returns></returns>
+        private bool Equals(string firstName)
         {
-            foreach (Contact contact in this.ContactsList)
-            {
-                Console.WriteLine("First Name = " + contact.FirstName);
-                Console.WriteLine("Last Name = " + contact.LastName);
-                Console.WriteLine("Address = " + contact.Address);
-                Console.WriteLine("City  = " + contact.City);
-                Console.WriteLine("State = " + contact.State);
-                Console.WriteLine("Zip code  = " + contact.Zip);
-                Console.WriteLine("Phone number  = " + contact.PhoneNum);
-                Console.WriteLine("Email ID  = " + contact.Email);
-            }
+            if (this.contactList.Any(e => e.firstName == firstName))
+                return true;
+            else
+                return false;
         }
-        public void EditExistingContact()
+
+        /// <summary>
+        /// Editing the contacts by passing parameter as first name 
+        /// </summary>
+        /// <param name="firstName"></param>
+        public void EditContact(string firstName)
         {
-        search:
-            Console.WriteLine("\nEnter first name of the person for editing contact");
-            String firstname = Console.ReadLine();
-            bool findContact = false;
-            foreach (Contact contact in this.ContactsList)      //Iterating contacts iin list
+            int flag = 1;
+            foreach (Contact contact in contactList)
             {
-                //Checking the existatnce of the person name in contact list
-                if (contact.FirstName == firstname)
+                if (firstName.Equals(contact.firstName))
                 {
-                ReCheck:
+                    flag = 0;
                     Console.WriteLine("Please select the area of editing \n" +
                         "1)First Name\n2)Last Name\n3)Address\n4)Phone Number\n5)Email_Id");
                     int option = Convert.ToInt32(Console.ReadLine());
@@ -80,58 +62,99 @@ namespace AddressBookOOPs
                     {
                         case 1:
                             Console.WriteLine("Please enter your first name : ");
-                            contact.FirstName = Console.ReadLine();
+                            contact.firstName = Console.ReadLine();
                             break;
                         case 2:
                             Console.WriteLine("Please enter your last name : ");
-                            contact.LastName = Console.ReadLine();
+                            contact.lastName = Console.ReadLine();
                             break;
                         case 3:
                             Console.WriteLine("Please enter your Address : ");
-                            contact.Address = Console.ReadLine();
+                            contact.address = Console.ReadLine();
                             break;
                         case 4:
                             Console.WriteLine("Please enter your Phone Number : ");
-                            contact.PhoneNum = Console.ReadLine();
+                            contact.phoneNumber = Console.ReadLine();
                             break;
                         case 5:
                             Console.WriteLine("Please enter your email Id: ");
-                            contact.Email = Console.ReadLine();
+                            contact.email = Console.ReadLine();
                             break;
                         default:
                             Console.WriteLine("Entered an Invalid input\n try again");
-                            goto ReCheck;
+                            break;
                     }
-                    Console.WriteLine("Contact edited succesfully");
-                    findContact = true;
                 }
             }
-            if (!findContact)
+            if (flag == 1)
             {
-                Console.WriteLine("*** Wrong Input ***: please enter a valid First name\n Enter Y/N");
-                if (Console.ReadKey().Key == ConsoleKey.Y)
-                {
-                    goto search;
-                }
+                Console.WriteLine("Contact not found");
             }
         }
-        public void DeleteExistingContact()
+
+        /// <summary>
+        /// Deleting the contact of the person
+        /// </summary>
+        /// <param name="firstName"></param>
+        public void DeleteContact(string firstName)
         {
-            bool delete = false;
-            Console.WriteLine("\nEnter first name of the person for deleting contact");
-            String firstname = Console.ReadLine();
-            foreach (Contact contact in this.ContactsList)      //Iterating contacts in list
+            int flag = 1;
+            foreach (Contact contact in contactList)
             {
-                //Checking the existatnce of the person name in contact list
-                if (contact.FirstName == firstname)
+                if (firstName.Equals(contact.firstName))
                 {
-                    this.ContactsList.Remove(contact);
-                    delete = true;
+                    flag = 0;
+                    contactList.Remove(contact);
+                    Console.WriteLine("Sucessfully deleted");
                     break;
                 }
             }
-            if (!delete)
-                Console.WriteLine("*** Wrong Input ***: please enter a valid First name");
+            if (flag == 1)
+            {
+                Console.WriteLine("Contact not found");
+            }
+        }
+
+        /// <summary>
+        /// Displaying the contacts
+        /// </summary>
+        public void DisplayContact()
+        {
+            foreach (Contact contact in contactList)
+            {
+                Console.WriteLine("\nFirst name = " + contact.firstName);
+                Console.WriteLine("Last name = " + contact.lastName);
+                Console.WriteLine("Address = " + contact.address);
+                Console.WriteLine("city = " + contact.city);
+                Console.WriteLine("state = " + contact.state);
+                Console.WriteLine("zip = " + contact.zip);
+                Console.WriteLine("phoneNumber = " + contact.phoneNumber);
+                Console.WriteLine("email = " + contact.email);
+            }
+        }
+
+        /// <summary>
+        /// searching the list of persons in a perticular City and state
+        /// </summary>
+        /// <param name="place"> the city or the state </param>
+        /// <returns></returns>
+        public List<string> FindPerson(string place)
+        {
+            List<string> personFound = new List<string>();
+            foreach (Contact contact in contactList.FindAll(e => (e.city.Equals(place))).ToList())
+            {
+                string name = contact.firstName + " " + contact.lastName;
+                personFound.Add(name);
+            }
+            if (personFound.Count == 0)
+            {
+                foreach (Contact contact in contactList.FindAll(e => (e.state.Equals(place))).ToList())
+                {
+                    string name = contact.firstName + " " + contact.lastName;
+                    personFound.Add(name);
+                }
+            }
+            return personFound;
         }
     }
 }
