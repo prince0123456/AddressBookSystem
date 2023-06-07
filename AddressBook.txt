@@ -1,0 +1,2 @@
+﻿first Name=Akshata,last name=RN,address=Hubli,city=Hubli,state=karnataka,zip=580030,phone number=856451515,email=akshata@gmail.com
+first Name=Prajna,last name=N,address=jpnagar,city=bangalore,state=karnataka,zip=560076,phone number=9786245931,email=abc@gmail.com
