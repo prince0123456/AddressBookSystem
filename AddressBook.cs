@@ -82,5 +82,24 @@ namespace AddressBookOOPs
                 }
             }
         }
+        public void DeleteExistingContact()
+        {
+            Console.WriteLine("\nEnter first name of the person for deleting contact");
+            String firstname = Console.ReadLine();
+            foreach (Contact contact in this.ContactsList)      //Iterating contacts in list
+            {
+                //Checking the existatnce of the person name in contact list
+                if (contact.FirstName == firstname)
+                {
+                    this.ContactsList.Remove(contact);
+                    Console.WriteLine("Contact deleted succesfully");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("*** Wrong Input ***: please enter a valid First name");
+                }
+            }
+        }
     }
 }
