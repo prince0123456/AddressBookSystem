@@ -124,7 +124,7 @@ namespace AddressBookOOPs
                             Environment.Exit(0);
                             break;
                         default:
-                            Console.WriteLine("Enter The Valid Choise");
+                            Console.WriteLine("Enter The Valid Input");
                             break;
                     }
                 }
@@ -189,13 +189,16 @@ namespace AddressBookOOPs
 
         public static void DisplayPersonDictionary(Dictionary<string, List<string>> areaDictionary)
         {
+            int count = 0;
             foreach (var element in areaDictionary)
             {
                 foreach (string person in element.Value)
                 {
-                    Console.WriteLine("Paeron name : " + person + " Area :" + element.Key);
+                    count++;
+                    Console.WriteLine("Person name : " + person + " Area :" + element.Key);
                 }
             }
+            Console.WriteLine("Count : " + count);
         }
     }
 }

@@ -131,25 +131,5 @@ namespace AddressBookOOPs
             }
             return personFound;
         }
-
-        public void addContact(string firstName, string lastName, string address, string city, string state, string zip, string phoneNumber, string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void editContact(string firstName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void deleteContact(string firstName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void displayContact()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
